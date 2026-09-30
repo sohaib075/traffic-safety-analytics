@@ -1,0 +1,21 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "api",
+      "runtimeExecutable": "E:/own work/comp vsn/backend/.venv/Scripts/python.exe",
+      "runtimeArgs": ["-m", "uvicorn", "roadguard.api:app", "--app-dir", "E:/own work/comp vsn/backend", "--port", "8010"],
+      "cwd": "E:/own work/comp vsn/backend",
+      "port": 8010,
+      "autoPort": false
+    },
+    {
+      "name": "dashboard",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["E:/own work/comp vsn/frontend/node_modules/next/dist/bin/next", "dev", "E:/own work/comp vsn/frontend", "-p", "3000"],
+      "cwd": "E:/own work/comp vsn/frontend",
+      "port": 3000,
+      "autoPort": false
+    }
+  ]
+}

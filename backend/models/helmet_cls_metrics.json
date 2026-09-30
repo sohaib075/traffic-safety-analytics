@@ -1,0 +1,93 @@
+{
+  "crops": {
+    "n": 1922,
+    "accuracy": 0.8715,
+    "no_helmet_precision": 0.8462,
+    "no_helmet_recall": 0.7891,
+    "no_helmet_f1": 0.8166,
+    "helmet_recall": 0.9184,
+    "tp": 550,
+    "fp": 100,
+    "fn": 147,
+    "tn": 1125
+  },
+  "tracks": {
+    "n": 1422,
+    "accuracy": 0.8854,
+    "no_helmet_precision": 0.8665,
+    "no_helmet_recall": 0.7952,
+    "no_helmet_f1": 0.8293,
+    "helmet_recall": 0.934,
+    "tp": 396,
+    "fp": 61,
+    "fn": 102,
+    "tn": 863
+  },
+  "track_threshold_sweep": {
+    "0.3": {
+      "n": 1422,
+      "accuracy": 0.8713,
+      "no_helmet_precision": 0.7933,
+      "no_helmet_recall": 0.8554,
+      "no_helmet_f1": 0.8232,
+      "helmet_recall": 0.8799,
+      "tp": 426,
+      "fp": 111,
+      "fn": 72,
+      "tn": 813
+    },
+    "0.4": {
+      "n": 1422,
+      "accuracy": 0.8805,
+      "no_helmet_precision": 0.8333,
+      "no_helmet_recall": 0.8233,
+      "no_helmet_f1": 0.8283,
+      "helmet_recall": 0.9113,
+      "tp": 410,
+      "fp": 82,
+      "fn": 88,
+      "tn": 842
+    },
+    "0.5": {
+      "n": 1422,
+      "accuracy": 0.8854,
+      "no_helmet_precision": 0.8665,
+      "no_helmet_recall": 0.7952,
+      "no_helmet_f1": 0.8293,
+      "helmet_recall": 0.934,
+      "tp": 396,
+      "fp": 61,
+      "fn": 102,
+      "tn": 863
+    },
+    "0.6": {
+      "n": 1422,
+      "accuracy": 0.8797,
+      "no_helmet_precision": 0.8829,
+      "no_helmet_recall": 0.757,
+      "no_helmet_f1": 0.8151,
+      "helmet_recall": 0.9459,
+      "tp": 377,
+      "fp": 50,
+      "fn": 121,
+      "tn": 874
+    },
+    "0.7": {
+      "n": 1422,
+      "accuracy": 0.8819,
+      "no_helmet_precision": 0.9253,
+      "no_helmet_recall": 0.7209,
+      "no_helmet_f1": 0.8104,
+      "helmet_recall": 0.9686,
+      "tp": 359,
+      "fp": 29,
+      "fn": 139,
+      "tn": 895
+    }
+  },
+  "model": "yolo11n-cls.pt",
+  "imgsz": 224,
+  "epochs": 30,
+  "train_minutes": 129.6,
+  "dataset": "HELMET (osf.io/4pwj8, CC BY 4.0) \u2014 frame-budgeted subset"
+}

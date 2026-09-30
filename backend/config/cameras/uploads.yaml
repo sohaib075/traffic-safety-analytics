@@ -1,0 +1,26 @@
+# Generic profile used for "Analyze video" uploads (any footage, no per-camera setup).
+# The whole frame is one road zone and the metric scale is estimated from car sizes in the
+# video. Rules that need scene geometry drawn for a specific camera (stop lines / signals for
+# red-light, lane directions for wrong-way) are not available here — create a dedicated
+# camera config for that site in Admin.
+id: uploads
+name: "Uploaded videos"
+model: yolo11s.pt
+tracker: config/trackers/roadguard_bytetrack.yaml
+conf_threshold: 0.25
+calibration:
+  auto_scale: true          # estimate metres-per-pixel from median car width
+  approx_scene_width_m: 40  # fallback when no cars are visible
+zones:
+  - id: scene
+    name: "Scene"
+    type: road
+    polygon: [[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]]
+rules:
+  # Conservative conflict settings for unknown, uncalibrated camera angles.
+  near_miss: {ttc_threshold_s: 1.2, min_closing_mps: 2.5, confirm_frames: 3}
+  ped_conflict: {ttc_threshold_s: 1.5, min_closing_mps: 2.0, confirm_frames: 3}
+  illegal_stop: {dwell_s: 30}
+  helmet: {enabled: true, model: models/helmet_cls.pt, imgsz: 224, check_every_s: 0.1, min_checks: 5, threshold: 0.5}
+privacy: {blur_heads: false}
+evidence: {pre_s: 3, post_s: 3}

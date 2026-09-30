@@ -1,0 +1,27 @@
+{
+  "Mandalay_2_53": {
+    "motorcycles_labelled": 40,
+    "judgeable_h>=80px": 40,
+    "no_helmet": 15,
+    "helmet": 25
+  },
+  "Mandalay_2_156": {
+    "motorcycles_labelled": 29,
+    "judgeable_h>=80px": 29,
+    "no_helmet": 12,
+    "helmet": 17
+  },
+  "Mandalay_2_108": {
+    "motorcycles_labelled": 29,
+    "judgeable_h>=80px": 29,
+    "no_helmet": 12,
+    "helmet": 17
+  },
+  "Mandalay_2_183": {
+    "motorcycles_labelled": 33,
+    "judgeable_h>=80px": 33,
+    "no_helmet": 8,
+    "helmet": 25
+  },
+  "_note": "HELMET dataset test split (osf.io/4pwj8, CC BY 4.0), 10 fps; clips concatenated in order, 100 frames (10 s) each."
+}

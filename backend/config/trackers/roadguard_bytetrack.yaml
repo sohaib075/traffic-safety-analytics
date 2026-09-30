@@ -1,0 +1,10 @@
+# ByteTrack tuned for fast-moving two-wheelers at low frame rates (e.g. 10 fps roadside CCTV).
+# Differences from the Ultralytics default: accept weaker detections into tracks, start tracks
+# sooner, and associate across larger jumps between frames (lower IoU requirement).
+tracker_type: bytetrack
+track_high_thresh: 0.2
+track_low_thresh: 0.05
+new_track_thresh: 0.2
+track_buffer: 30
+match_thresh: 0.9   # cost threshold (1 - IoU): 0.9 accepts IoU >= 0.1 between frames
+fuse_score: True

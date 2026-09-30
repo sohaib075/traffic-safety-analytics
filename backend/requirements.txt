@@ -1,0 +1,17 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+torchvision
+ultralytics>=8.3
+lap>=0.5.12
+opencv-python
+numpy
+pyyaml
+fastapi
+uvicorn[standard]
+sqlalchemy>=2.0
+pydantic>=2
+python-multipart
+reportlab
+httpx
+pytest
+imageio-ffmpeg

@@ -1,0 +1,24 @@
+# Road-risk indicator configuration.
+#
+# The indicator is a transparent, configurable weighting of *observed* events. It is NOT an
+# estimate of real accident probability. Score = Σ(weight[type] × severity_multiplier[sev])
+# per 1,000 observed vehicles (with a minimum denominator so quiet periods don't explode).
+weights:
+  near_miss: 5
+  ped_conflict: 6
+  wrong_way: 6
+  red_light: 3
+  helmet_violation: 1
+  illegal_stop: 1
+  congestion: 2
+severity_multiplier:
+  low: 0.5
+  medium: 1.0
+  high: 2.0
+per_vehicles: 1000
+min_vehicles: 200
+levels:            # score thresholds (lower bound, inclusive)
+  - {name: LOW, min: 0}
+  - {name: MODERATE, min: 15}
+  - {name: HIGH, min: 40}
+  - {name: CRITICAL, min: 100}

@@ -1,0 +1,4 @@
+# Development seed users (created on API start if missing). Change these before any real use.
+- {username: admin, password: roadguard-admin, role: admin}
+- {username: operator, password: roadguard-operator, role: operator}
+- {username: analyst, password: roadguard-analyst, role: analyst}

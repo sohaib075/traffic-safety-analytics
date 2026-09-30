@@ -1,0 +1,60 @@
+# Demo camera for intel-iot-devkit/sample-videos "person-bicycle-car-detection.mp4" (CC BY 4.0).
+# Overhead parking-lot footage, so the "road" rules are exercised on an aisle with a
+# *virtual* timed signal (no real traffic light is visible). Coordinates are normalized 0..1.
+# Map coordinates are placeholders — set them to the real camera site.
+id: demo_lot_a
+name: "Demo Lot A — West Aisle"
+location: {lat: 51.5079, lng: -0.0877}
+frame_stride: 1
+conf_threshold: 0.3
+calibration:
+  approx_scene_width_m: 22     # uncalibrated: uniform scale across the frame
+zones:
+  - id: west_aisle
+    name: "West Aisle"
+    type: road
+    polygon: [[0.0, 0.25], [0.36, 0.25], [0.36, 1.0], [0.0, 1.0]]
+    location: {lat: 51.50795, lng: -0.08795}
+  - id: north_walk
+    name: "North Walkway"
+    type: crosswalk
+    polygon: [[0.0, 0.0], [0.45, 0.0], [0.45, 0.32], [0.0, 0.32]]
+    location: {lat: 51.50815, lng: -0.08785}
+  - id: bays_east
+    name: "East Bays"
+    type: parking
+    polygon: [[0.62, 0.0], [1.0, 0.0], [1.0, 0.45], [0.62, 0.45]]
+    location: {lat: 51.50805, lng: -0.08735}
+  - id: fire_lane
+    name: "Fire Lane"
+    type: no_stopping
+    polygon: [[0.36, 0.55], [0.7, 0.55], [0.7, 1.0], [0.36, 1.0]]
+    location: {lat: 51.50778, lng: -0.08765}
+lanes:
+  - id: west_aisle_in
+    name: "West Aisle (one-way inbound)"
+    polygon: [[0.0, 0.3], [0.34, 0.3], [0.34, 1.0], [0.0, 1.0]]
+    direction: [0.45, 1.0]        # inbound traffic flows down/right in the image
+    zone_id: west_aisle
+signals:
+  - id: virtual_signal
+    name: "Virtual signal (timed)"
+    mode: schedule
+    cycle_s: 40
+    red_s: 20
+counting_lines:
+  - id: aisle_count
+    name: "Aisle count line"
+    line: [[0.0, 0.8], [0.34, 0.8]]
+stop_lines:
+  - id: aisle_stop
+    name: "Aisle stop line"
+    line: [[0.0, 0.62], [0.34, 0.62]]
+    crossing_direction: [-0.4, -1.0]
+    signal_id: virtual_signal
+    zone_id: west_aisle
+rules:
+  helmet: {enabled: true, model: models/helmet_cls.pt, imgsz: 224, min_checks: 4, threshold: 0.5}
+  illegal_stop: {dwell_s: 8}
+  congestion: {min_vehicles: 4, sustain_s: 10}
+evidence: {pre_s: 3, post_s: 3}

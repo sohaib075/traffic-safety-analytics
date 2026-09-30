@@ -1,0 +1,30 @@
+# Demo camera for intel-iot-devkit/sample-videos "car-detection.mp4" (CC BY 4.0).
+# Overhead view of a parking-lot drive lane. Coordinates are normalized 0..1.
+id: demo_lot_b
+name: "Demo Lot B — Entrance Lane"
+location: {lat: 51.5083, lng: -0.0862}
+calibration:
+  approx_scene_width_m: 16
+zones:
+  - id: entrance_lane
+    name: "Entrance Lane"
+    type: road
+    polygon: [[0.15, 0.0], [0.75, 0.0], [0.75, 1.0], [0.15, 1.0]]
+    location: {lat: 51.50832, lng: -0.08622}
+  - id: drop_off
+    name: "Drop-off Kerb"
+    type: no_stopping
+    polygon: [[0.0, 0.0], [0.15, 0.0], [0.15, 1.0], [0.0, 1.0]]
+    location: {lat: 51.50828, lng: -0.08640}
+lanes:
+  - id: entrance_up
+    name: "Entrance Lane (northbound)"
+    polygon: [[0.15, 0.0], [0.75, 0.0], [0.75, 1.0], [0.15, 1.0]]
+    direction: [0.0, -1.0]
+    zone_id: entrance_lane
+counting_lines:
+  - id: entrance_count
+    name: "Entrance count"
+    line: [[0.15, 0.5], [0.75, 0.5]]
+rules:
+  helmet: {enabled: true, model: models/helmet_cls.pt, imgsz: 224, min_checks: 4, threshold: 0.5}

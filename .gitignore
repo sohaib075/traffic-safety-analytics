@@ -1,0 +1,14 @@
+backend/.venv/
+backend/data/*
+!backend/data/samples/
+backend/*.pt
+__pycache__/
+.pytest_cache/
+frontend/node_modules/
+frontend/.next/
+frontend/next-env.d.ts
+*.tsbuildinfo
+backend/runs/
+backend/models/*.pt
+*.local.txt
+backend/config/dev-credentials.local.txt

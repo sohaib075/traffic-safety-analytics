@@ -1,0 +1,35 @@
+# Helmet-compliance demo on real roadside traffic: four TEST-split clips (never used in training)
+# from the HELMET dataset, Mandalay site 2 — Lin & Siebert, IEEE Access 2020, https://osf.io/4pwj8/,
+# CC BY 4.0. Built with backend/training/make_helmet_demo.py; ground truth in
+# data/samples/helmet_demo_mandalay.mp4.groundtruth.json. Map location is approximate (city level).
+id: demo_mandalay
+name: "Demo Mandalay — Roadside (helmet check)"
+location: {lat: 21.9588, lng: 96.0891}
+# Dense, fast two-wheeler traffic at 10 fps: a larger detector and a looser tracker roughly
+# double the motorcycles tracked long enough to judge (see training/diagnose_tracking.py).
+model: yolo11s.pt
+tracker: config/trackers/roadguard_bytetrack.yaml
+conf_threshold: 0.2
+calibration:
+  approx_scene_width_m: 20      # uncalibrated side-on view
+zones:
+  - id: near_lanes
+    name: "Near lanes"
+    type: road
+    polygon: [[0.0, 0.66], [1.0, 0.66], [1.0, 1.0], [0.0, 1.0]]
+    location: {lat: 21.95885, lng: 96.08905}
+  - id: far_lanes
+    name: "Far lanes"
+    type: road
+    polygon: [[0.0, 0.62], [1.0, 0.62], [1.0, 0.66], [0.0, 0.66]]
+    location: {lat: 21.95895, lng: 96.08915}
+rules:
+  helmet: {enabled: true, model: models/helmet_cls.pt, imgsz: 224, check_every_s: 0.1, min_checks: 5, threshold: 0.5}
+  # Side-on, uncalibrated view: riders pass within a metre of each other in the image, so
+  # time-to-conflict estimates are meaningless here. Enable after calibrating the camera.
+  near_miss: {enabled: false}
+  ped_conflict: {enabled: false}
+evidence: {pre_s: 2, post_s: 2}
+# Head blurring would hide exactly what a reviewer must verify for a helmet incident, so it is off
+# for this camera; evidence clips stay restricted to operator/admin roles instead.
+privacy: {blur_heads: false}
