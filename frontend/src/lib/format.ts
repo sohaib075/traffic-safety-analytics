@@ -1,11 +1,12 @@
-export const EVENT_META: Record<string, { label: string; short: string; color: string }> = {
-  near_miss: { label: "Potential Near-Miss", short: "Near-Miss", color: "#f97316" },
-  ped_conflict: { label: "Potential Pedestrian Conflict", short: "Ped Conflict", color: "#ec4899" },
-  red_light: { label: "Red-Light Event", short: "Red-Light", color: "#ef4444" },
-  wrong_way: { label: "Potential Wrong-Way", short: "Wrong-Way", color: "#a855f7" },
-  illegal_stop: { label: "Potential Illegal Stopping", short: "Illegal Stop", color: "#64748b" },
-  congestion: { label: "Congestion", short: "Congestion", color: "#eab308" },
-  helmet_violation: { label: "Potential Helmet Violation", short: "Helmet", color: "#06b6d4" },
+// color = marks/bars (≥3:1 on white); text/bg = readable label on a soft tint (≥4.5:1).
+export const EVENT_META: Record<string, { label: string; short: string; color: string; text: string; bg: string }> = {
+  near_miss: { label: "Potential Near-Miss", short: "Near-Miss", color: "#ea580c", text: "#9a3412", bg: "#fff1e6" },
+  ped_conflict: { label: "Potential Pedestrian Conflict", short: "Ped Conflict", color: "#db2777", text: "#9d174d", bg: "#fdf0f6" },
+  red_light: { label: "Red-Light Event", short: "Red-Light", color: "#dc2626", text: "#991b1b", bg: "#fef0f0" },
+  wrong_way: { label: "Potential Wrong-Way", short: "Wrong-Way", color: "#7c3aed", text: "#5b21b6", bg: "#f4f0ff" },
+  illegal_stop: { label: "Potential Illegal Stopping", short: "Illegal Stop", color: "#475569", text: "#334155", bg: "#f1f4f8" },
+  congestion: { label: "Congestion", short: "Congestion", color: "#ca8a04", text: "#854d0e", bg: "#fdf8e6" },
+  helmet_violation: { label: "Potential Helmet Violation", short: "Helmet", color: "#0891b2", text: "#155e75", bg: "#ecfafd" },
 };
 
 export const EVENT_TYPES = Object.keys(EVENT_META);
@@ -16,25 +17,48 @@ export function eventLabel(t: string, short = false) {
 }
 
 export const SEVERITY_COLOR: Record<string, string> = {
-  high: "#ef4444",
-  medium: "#f59e0b",
-  low: "#84cc16",
+  high: "#dc2626",
+  medium: "#d97706",
+  low: "#65a30d",
+};
+export const SEVERITY_STYLE: Record<string, { text: string; bg: string; ring: string }> = {
+  high: { text: "#991b1b", bg: "#fef2f2", ring: "#fecaca" },
+  medium: { text: "#92400e", bg: "#fffbeb", ring: "#fde68a" },
+  low: { text: "#3f6212", bg: "#f7fee7", ring: "#d9f99d" },
 };
 
 export const LEVEL_COLOR: Record<string, string> = {
-  LOW: "#22c55e",
-  MODERATE: "#eab308",
-  HIGH: "#ef4444",
-  CRITICAL: "#b91c1c",
+  LOW: "#16a34a",
+  MODERATE: "#d97706",
+  HIGH: "#dc2626",
+  CRITICAL: "#991b1b",
+};
+export const LEVEL_STYLE: Record<string, { text: string; bg: string }> = {
+  LOW: { text: "#166534", bg: "#f0fdf4" },
+  MODERATE: { text: "#92400e", bg: "#fffbeb" },
+  HIGH: { text: "#991b1b", bg: "#fef2f2" },
+  CRITICAL: { text: "#7f1d1d", bg: "#fee2e2" },
 };
 
 export const CLASS_COLOR: Record<string, string> = {
-  car: "#3b82f6",
-  motorcycle: "#06b6d4",
-  bus: "#a855f7",
-  truck: "#f97316",
-  bicycle: "#84cc16",
-  pedestrian: "#22c55e",
+  car: "#2563eb",
+  motorcycle: "#0891b2",
+  bus: "#7c3aed",
+  truck: "#ea580c",
+  bicycle: "#65a30d",
+  pedestrian: "#16a34a",
+  rider: "#0e7490",
+};
+
+/** Shared chart styling (Recharts) for the light theme. */
+export const CHART = {
+  grid: "#e2e8f0",
+  axis: { fill: "#64748b", fontSize: 11 },
+  tooltip: {
+    contentStyle: { background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 10, fontSize: 12, boxShadow: "0 10px 30px -8px rgb(15 23 42 / .2)" },
+    labelStyle: { color: "#0f172a", fontWeight: 600 },
+    cursor: { fill: "#0f172a0a" },
+  },
 };
 
 export const nf = new Intl.NumberFormat("en-US");

@@ -1,18 +1,35 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------------------------------
+   RoadGuard design tokens — light theme.
+   Contrast (on white): ink 17.9:1, muted 7.5:1, faint 4.6:1, accent 5.2:1 — all WCAG AA+.
+   ------------------------------------------------------------------------------------------ */
 @theme {
-  --color-bg: #080c14;
-  --color-panel: #0f1520;
-  --color-panel-2: #151d2b;
-  --color-line: #1f2a3a;
-  --color-ink: #e6ebf2;
-  --color-muted: #8b98ab;
-  --color-faint: #5b6778;
-  --color-accent: #3b82f6;
-  --color-ok: #22c55e;
-  --color-warn: #f59e0b;
-  --color-bad: #ef4444;
-  --color-crit: #b91c1c;
+  --color-bg: #f4f6fa;        /* page background (soft grey-white) */
+  --color-panel: #ffffff;     /* cards */
+  --color-panel-2: #f1f4f9;   /* subtle fills: inputs at rest, table hovers, chips */
+  --color-line: #e2e8f0;      /* borders, dividers */
+  --color-line-strong: #cbd5e1;
+  --color-ink: #0f172a;       /* primary text */
+  --color-muted: #475569;     /* secondary text */
+  --color-faint: #64748b;     /* tertiary text, still AA on white */
+  --color-accent: #2563eb;    /* brand blue */
+  --color-accent-hover: #1d4ed8;
+  --color-accent-soft: #eff4ff;
+  --color-ok: #16a34a;
+  --color-warn: #d97706;
+  --color-bad: #dc2626;
+  --color-crit: #991b1b;
+
+  /* sidebar */
+  --color-nav: #0b1730;
+  --color-nav-2: #13224a;
+  --color-nav-ink: #e7ecf7;
+  --color-nav-muted: #93a3c4;
+
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
+  --shadow-pop: 0 10px 30px -8px rgb(15 23 42 / 0.25);
+
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 }
@@ -25,7 +42,17 @@ body {
 
 body {
   font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #bfdbfe;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 /* Component classes live in the components layer so Tailwind utilities (py-1, pl-9, …)
@@ -34,15 +61,23 @@ body {
   .panel {
     background: var(--color-panel);
     border: 1px solid var(--color-line);
-    border-radius: 10px;
+    border-radius: 14px;
+    box-shadow: var(--shadow-card);
   }
 
   .panel-title {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-muted);
+    font-size: 13px;
     font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.005em;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-faint);
   }
 
   .num {
@@ -53,83 +88,116 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    border-radius: 7px;
-    padding: 6px 12px;
+    border-radius: 9px;
+    padding: 7px 13px;
     font-size: 13px;
     font-weight: 500;
-    border: 1px solid var(--color-line);
-    background: var(--color-panel-2);
+    line-height: 1.2;
+    border: 1px solid var(--color-line-strong);
+    background: #fff;
     color: var(--color-ink);
-    transition: background 0.15s, border-color 0.15s;
+    box-shadow: 0 1px 1px rgb(15 23 42 / 0.04);
+    transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, color 0.15s;
   }
   .btn:hover {
-    border-color: #33445c;
-    background: #1a2433;
+    background: var(--color-panel-2);
+    border-color: #94a3b8;
   }
   .btn:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
   }
   .btn-primary {
     background: var(--color-accent);
     border-color: var(--color-accent);
-    color: white;
+    color: #fff;
+    box-shadow: 0 1px 2px rgb(37 99 235 / 0.3);
   }
   .btn-primary:hover {
-    background: #2f6fdc;
-    border-color: #2f6fdc;
+    background: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+  }
+  .btn-danger {
+    background: var(--color-bad);
+    border-color: var(--color-bad);
+    color: #fff;
+  }
+  .btn-danger:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
   }
 
   .input {
-    background: var(--color-bg);
-    border: 1px solid var(--color-line);
-    border-radius: 7px;
-    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 9px;
+    padding: 7px 11px;
     font-size: 13px;
     color: var(--color-ink);
     outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .input::placeholder {
+    color: #94a3b8;
+  }
+  .input:hover {
+    border-color: #94a3b8;
   }
   .input:focus {
     border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgb(37 99 235 / 0.15);
+  }
+
+  /* selected / toggle state used by chips, segmented controls and option cards */
+  .is-active {
+    border-color: var(--color-accent) !important;
+    background: var(--color-accent-soft) !important;
+    color: var(--color-accent-hover) !important;
   }
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #243044;
-  border-radius: 8px;
+  background: #cbd5e1;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
+/* Leaflet, light */
 .leaflet-container {
-  background: #0b1220 !important;
+  background: #eef2f7 !important;
   font-family: var(--font-sans);
-}
-.map-tiles {
-  filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(0.9) saturate(0.6);
 }
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-  background: var(--color-panel-2) !important;
+  background: #fff !important;
   color: var(--color-ink) !important;
-  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-pop) !important;
 }
 .leaflet-control-attribution {
-  background: rgba(8, 12, 20, 0.7) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
   color: var(--color-faint) !important;
 }
 .leaflet-control-attribution a {
   color: var(--color-muted) !important;
 }
+.leaflet-bar a {
+  color: var(--color-ink) !important;
+}
 
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
-  100% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.35); }
+  100% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
 }
 .flash {
   animation: pulse-ring 1.2s ease-out 2;
