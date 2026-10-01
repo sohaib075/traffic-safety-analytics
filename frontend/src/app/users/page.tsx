@@ -139,7 +139,7 @@ export default function UsersPage() {
                     <td className="px-4 py-2.5">
                       <div className="font-medium">
                         {u.full_name || u.username}
-                        {self && <span className="ml-2 rounded bg-[var(--color-accent)]/15 px-1.5 py-0.5 text-[10px] font-semibold text-[var(--color-accent)]">YOU</span>}
+                        {self && <span className="ml-2 rounded bg-[var(--color-accent-soft)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--color-accent)]">YOU</span>}
                       </div>
                       <div className="font-mono text-xs text-[var(--color-faint)]">{u.username}</div>
                     </td>
@@ -170,7 +170,7 @@ export default function UsersPage() {
                         </button>
                         {u.active ? "Active" : "Disabled"}
                       </label>
-                      {u.must_change_password && u.active && <div className="mt-1 text-[11px] text-amber-300">Must set password</div>}
+                      {u.must_change_password && u.active && <div className="mt-1 text-[11px] text-amber-700">Must set password</div>}
                     </td>
                     <td className="px-2 py-2.5 text-[var(--color-muted)]" title={u.last_login ? `${fmtDate(u.last_login)} ${fmtTime(u.last_login)}` : undefined}>
                       {ago(u.last_login)}
@@ -182,7 +182,7 @@ export default function UsersPage() {
                           <KeyRound className="h-3.5 w-3.5" /> <span className="hidden lg:inline">Reset password</span>
                         </button>
                         <button
-                          className="btn px-2 py-1 text-xs hover:border-red-500/50 hover:text-red-300"
+                          className="btn px-2 py-1 text-xs hover:border-red-300 hover:text-red-700"
                           onClick={() => setDeleteTarget(u)}
                           disabled={self}
                           title={self ? "You can't delete your own account" : "Delete user"}
@@ -260,7 +260,7 @@ export default function UsersPage() {
               They must change it the first time they sign in.
             </p>
             <SecretBox value={secret.password} />
-            <p className="text-xs text-amber-300">It is shown only once and is not stored anywhere — copy it now.</p>
+            <p className="text-xs text-amber-700">It is shown only once and is not stored anywhere — copy it now.</p>
           </div>
         )}
       </Modal>
@@ -339,7 +339,7 @@ function AddUserDialog({ open, onClose, onCreated }: { open: boolean; onClose: (
           <legend className="mb-1.5 text-xs font-medium text-[var(--color-muted)]">Role</legend>
           <div className="space-y-1.5">
             {ROLES.map((r) => (
-              <label key={r.value} className={`flex cursor-pointer items-start gap-2.5 rounded-md border px-3 py-2 text-sm ${role === r.value ? "border-[var(--color-accent)] bg-[var(--color-accent)]/10" : "border-[var(--color-line)]"}`}>
+              <label key={r.value} className={`flex cursor-pointer items-start gap-2.5 rounded-md border px-3 py-2 text-sm ${role === r.value ? "border-[var(--color-accent)] bg-[var(--color-accent-soft)]" : "border-[var(--color-line)]"}`}>
                 <input type="radio" name="role" className="mt-1" checked={role === r.value} onChange={() => setRole(r.value)} />
                 <span>
                   <span className="block font-medium">{r.label}</span>

@@ -173,7 +173,10 @@ body {
   background: transparent;
 }
 
-/* Leaflet, light */
+/* Leaflet, light: calm the OSM palette so risk markers carry the colour */
+.map-tiles {
+  filter: saturate(0.45) brightness(1.04) contrast(0.95);
+}
 .leaflet-container {
   background: #eef2f7 !important;
   font-family: var(--font-sans);

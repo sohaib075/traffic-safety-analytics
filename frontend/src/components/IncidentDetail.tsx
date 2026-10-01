@@ -115,7 +115,7 @@ export function IncidentDetail({ id, onChange }: { id: number; onChange?: (i: In
           <div className="relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             {inc.snapshot_url && <img src={mediaUrl(inc.snapshot_url)} alt="Evidence frame" className="w-full rounded-md" />}
-            <div className="absolute bottom-2 left-2 rounded bg-black/70 px-2 py-1 text-xs text-[var(--color-muted)]">
+            <div className="absolute bottom-2 left-2 rounded bg-white/90 shadow-sm px-2 py-1 text-xs text-[var(--color-muted)]">
               {!can("investigate") ? "Clip access requires the operator role" : inc.clip_ready ? "" : "Clip still recording…"}
             </div>
           </div>
@@ -216,7 +216,7 @@ export function IncidentDetail({ id, onChange }: { id: number; onChange?: (i: In
           />
           <div className="flex flex-wrap gap-2">
             <button className="btn" onClick={() => review("confirmed")}>
-              <Check className="h-3.5 w-3.5 text-red-400" /> Confirm
+              <Check className="h-3.5 w-3.5 text-red-600" /> Confirm
             </button>
             <button className="btn" onClick={() => review("dismissed")}>
               <XIcon className="h-3.5 w-3.5" /> Dismiss (false positive)

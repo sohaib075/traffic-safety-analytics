@@ -112,10 +112,10 @@ export default function AccountPage() {
   if (required) {
     return (
       <div className="mx-auto max-w-md">
-        <div className="mb-4 flex items-start gap-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-sm">
-          <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" />
+        <div className="mb-4 flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm">
+          <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-amber-700" />
           <div>
-            <div className="font-medium text-amber-200">Set a new password to continue</div>
+            <div className="font-medium text-amber-900">Set a new password to continue</div>
             <div className="mt-0.5 text-[var(--color-muted)]">
               Your account ({me.username}) is using a temporary or default password. Choose a personal one — nobody else will know it.
             </div>

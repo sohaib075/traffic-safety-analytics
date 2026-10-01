@@ -7,7 +7,8 @@ import { api, mediaUrl } from "@/lib/api";
 import { fmtDate, fmtTime, localIso } from "@/lib/format";
 import { useApp, useFetch } from "@/lib/state";
 import type { CameraInfo, Job } from "@/lib/types";
-import { ErrorNote, Panel, StatusBadge } from "@/components/ui";
+import { ListChecks } from "lucide-react";
+import { ErrorNote, PageHeader, Panel, StatusBadge } from "@/components/ui";
 
 export default function AdminPage() {
   const { can, live } = useApp();
@@ -23,14 +24,15 @@ export default function AdminPage() {
   }, [Object.keys(live.progress).length]);
 
   return (
-    <div className="mx-auto max-w-[1400px] space-y-4">
-      <div className="grid gap-4 xl:grid-cols-[420px_1fr]">
+    <div className="mx-auto max-w-[1400px] space-y-6">
+      <PageHeader title="Admin" subtitle="Process footage for a configured camera, monitor processing jobs, edit camera scenes and review the audit log." />
+      <div className="grid gap-6 xl:grid-cols-[420px_1fr]">
         <ProcessForm cameras={cameras ?? []} onSubmitted={reloadJobs} />
-        <Panel title="Processing jobs" bodyClass="p-0">
-          <div className="max-h-[420px] overflow-auto">
+        <Panel title="Processing jobs" icon={ListChecks} bodyClass="p-0">
+          <div className="max-h-[460px] overflow-auto">
             <table className="w-full text-sm">
-              <thead className="sticky top-0 bg-[var(--color-panel)] text-left text-xs text-[var(--color-muted)]">
-                <tr className="border-b border-[var(--color-line)]">
+              <thead className="sticky top-0 bg-[var(--color-panel-2)] text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-faint)]">
+                <tr>
                   <th className="px-4 py-2 font-medium">Job</th>
                   <th className="px-2 py-2 font-medium">Camera / source</th>
                   <th className="px-2 py-2 font-medium">Progress</th>
@@ -67,7 +69,7 @@ export default function AdminPage() {
                       </td>
                       <td className="px-2 py-2 text-xs text-[var(--color-muted)]">
                         {j.error ? (
-                          <span className="text-red-300">{j.error}</span>
+                          <span className="text-red-700">{j.error}</span>
                         ) : ev ? (
                           Object.entries(ev).map(([k, v]) => `${k} ${v}`).join(" · ") || "no events"
                         ) : (
@@ -181,7 +183,7 @@ function ProcessForm({ cameras, onSubmitted }: { cameras: CameraInfo[]; onSubmit
         <button className="btn btn-primary" disabled={busy || !camera || (!file && !path)}>
           {file ? <Upload className="h-4 w-4" /> : <Play className="h-4 w-4" />} {busy ? "Submitting…" : "Start processing"}
         </button>
-        {msg && <p className="text-emerald-300">{msg}</p>}
+        {msg && <p className="text-emerald-700">{msg}</p>}
         <ErrorNote error={error} />
       </form>
     </Panel>
@@ -276,9 +278,9 @@ function CameraEditor({ cameras, canEdit, onSaved }: { cameras: CameraInfo[]; ca
           </div>
           <div className="mt-2 flex flex-wrap gap-3 text-[11px] text-[var(--color-muted)]">
             <span>▭ zones</span>
-            <span className="text-purple-400">┅ lanes (direction in config)</span>
-            <span className="text-red-400">━ stop lines</span>
-            <span className="text-cyan-400">━ counting lines</span>
+            <span className="text-violet-700">┅ lanes (direction in config)</span>
+            <span className="text-red-600">━ stop lines</span>
+            <span className="text-cyan-700">━ counting lines</span>
             <span>Coordinates are normalized 0–1.</span>
           </div>
         </div>
@@ -298,7 +300,7 @@ function CameraEditor({ cameras, canEdit, onSaved }: { cameras: CameraInfo[]; ca
             ) : (
               <span className="text-xs text-[var(--color-muted)]">Read-only — configuration requires the admin role.</span>
             )}
-            {saved && <span className="text-xs text-emerald-300">Saved. Applies to the next processing job.</span>}
+            {saved && <span className="text-xs text-emerald-700">Saved. Applies to the next processing job.</span>}
           </div>
           <ErrorNote error={error} />
         </div>

@@ -40,13 +40,15 @@ export default function ZoneMapInner({
     <MapContainer
       center={located[0] ? [located[0].lat!, located[0].lng!] : [51.5079, -0.0877]}
       zoom={17}
-      style={{ height, width: "100%", borderRadius: 8 }}
+      style={{ height, width: "100%" }}
       scrollWheelZoom
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         className="map-tiles"
+        maxNativeZoom={19}
+        maxZoom={20}
       />
       <Fit zones={located} />
       {located.map((z) => {
@@ -57,7 +59,7 @@ export default function ZoneMapInner({
             key={`${z.camera_id}:${z.id}`}
             center={[z.lat!, z.lng!]}
             radius={10 + (v / maxVal) * 22}
-            pathOptions={{ color, fillColor: color, fillOpacity: 0.35 + (v / maxVal) * 0.35, weight: 2 }}
+            pathOptions={{ color: "#ffffff", fillColor: color, fillOpacity: 0.55 + (v / maxVal) * 0.3, weight: 2.5 }}
             eventHandlers={{ click: () => onSelect?.(z) }}
           >
             <Tooltip direction="top" offset={[0, -8]}>

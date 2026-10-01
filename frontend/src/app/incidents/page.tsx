@@ -2,13 +2,13 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { FileSearch, Search, SlidersHorizontal } from "lucide-react";
 import { api, qs } from "@/lib/api";
 import { EVENT_META, EVENT_TYPES, dayRange, fmtDate, fmtTime } from "@/lib/format";
 import { useApp, useFetch } from "@/lib/state";
 import type { CameraInfo, Incident } from "@/lib/types";
 import { IncidentDetail } from "@/components/IncidentDetail";
-import { Empty, ErrorNote, EventBadge, Panel, SeverityBadge, StatusBadge } from "@/components/ui";
+import { Empty, ErrorNote, EventBadge, PageHeader, Panel, SeverityBadge, StatusBadge } from "@/components/ui";
 
 const PAGE = 25;
 
@@ -30,11 +30,13 @@ function Chip({ on, onClick, children, color }: { on: boolean; onClick: () => vo
   return (
     <button
       onClick={onClick}
-      className={`rounded-full border px-2.5 py-0.5 text-xs transition-colors ${
-        on ? "border-transparent text-white" : "border-[var(--color-line)] text-[var(--color-muted)] hover:text-white"
+      aria-pressed={on}
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+        on ? "text-[var(--color-ink)] shadow-sm" : "border-[var(--color-line-strong)] bg-white text-[var(--color-muted)] hover:border-slate-400 hover:text-[var(--color-ink)]"
       }`}
-      style={on ? { background: `${color ?? "#3b82f6"}33`, borderColor: color ?? "#3b82f6" } : undefined}
+      style={on ? { background: `${color ?? "#2563eb"}14`, borderColor: color ?? "#2563eb" } : undefined}
     >
+      {color && <span className="h-2 w-2 rounded-full" style={{ background: color }} />}
       {children}
     </button>
   );
@@ -89,8 +91,10 @@ function Investigator() {
   const pq = data?.parsed_query;
 
   return (
-    <div className="mx-auto grid max-w-[1500px] gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)]">
-      <div className="min-w-0 space-y-3">
+    <div className="mx-auto max-w-[1500px]">
+    <PageHeader title="Investigator" subtitle="Search incidents in plain language, filter, and verify each one against its evidence clip." />
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)]">
+      <div className="min-w-0 space-y-4">
         <form
           className="flex gap-2"
           onSubmit={(e) => {
@@ -239,24 +243,24 @@ function Investigator() {
                   <tr
                     key={i.id}
                     onClick={() => select(i.id)}
-                    className={`cursor-pointer hover:bg-[var(--color-panel-2)] ${selected === i.id ? "bg-[var(--color-panel-2)]" : ""}`}
+                    className={`cursor-pointer transition-colors ${selected === i.id ? "bg-[var(--color-accent-soft)] shadow-[inset_3px_0_0_var(--color-accent)]" : "hover:bg-[var(--color-panel-2)]"}`}
                   >
-                    <td className="num whitespace-nowrap px-4 py-2.5 text-[var(--color-muted)]">
-                      <div className="text-[var(--color-ink)]">{fmtTime(i.occurred_at)}</div>
+                    <td className="num whitespace-nowrap px-5 py-3 text-[var(--color-faint)]">
+                      <div className="font-medium text-[var(--color-ink)]">{fmtTime(i.occurred_at)}</div>
                       <div className="text-[11px]">{fmtDate(i.occurred_at)}</div>
                     </td>
-                    <td className="px-2 py-2.5">
+                    <td className="px-3 py-3">
                       <EventBadge t={i.type} />
-                      <div className="text-[11px] text-[var(--color-faint)]">#{i.id}</div>
+                      <div className="mt-0.5 pl-[18px] text-[11px] text-[var(--color-faint)]">#{i.id}</div>
                     </td>
-                    <td className="hidden px-2 py-2.5 text-[var(--color-muted)] sm:table-cell">{i.zone_name ?? "—"}</td>
-                    <td className="hidden px-2 py-2.5 text-xs text-[var(--color-muted)] md:table-cell">
+                    <td className="hidden px-3 py-3 text-[var(--color-muted)] sm:table-cell">{i.zone_name ?? "—"}</td>
+                    <td className="hidden px-3 py-3 text-xs text-[var(--color-faint)] md:table-cell">
                       {i.classes.map((c, n) => `${c} #${i.track_ids[n]}`).join(" + ")}
                     </td>
-                    <td className="px-2 py-2.5">
+                    <td className="px-3 py-3">
                       <SeverityBadge s={i.severity} />
                     </td>
-                    <td className="px-4 py-2.5 text-right">
+                    <td className="px-5 py-3 text-right">
                       <StatusBadge s={i.status} />
                     </td>
                   </tr>
@@ -267,18 +271,19 @@ function Investigator() {
         </Panel>
       </div>
 
-      <div className="min-w-0 lg:sticky lg:top-[72px] lg:max-h-[calc(100vh-88px)] lg:overflow-y-auto">
-        <Panel title="Incident detail">
+      <div className="min-w-0 lg:sticky lg:top-[88px] lg:max-h-[calc(100vh-104px)] lg:overflow-y-auto">
+        <Panel title="Incident detail" icon={FileSearch}>
           {selected ? (
             <IncidentDetail
               id={selected}
               onChange={(d) => setData((cur) => (cur ? { ...cur, items: cur.items.map((x) => (x.id === d.id ? d : x)) } : cur))}
             />
           ) : (
-            <Empty>Select an incident to view evidence, measurements and the journey of each object.</Empty>
+            <Empty icon={FileSearch}>Select an incident to view evidence, measurements and the journey of each object.</Empty>
           )}
         </Panel>
       </div>
+    </div>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { api, qs } from "@/lib/api";
 import { EVENT_META, EVENT_TYPES, dayRange, fmtHour, nf } from "@/lib/format";
 import { useApp, useFetch } from "@/lib/state";
 import type { CameraInfo, Summary } from "@/lib/types";
-import { ErrorNote, Panel, RiskLevel } from "@/components/ui";
+import { ErrorNote, PageHeader, Panel, RiskLevel } from "@/components/ui";
 
 export default function ReportsPage() {
   const { day, extent } = useApp();
@@ -36,8 +36,9 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl space-y-4">
-      <Panel title="Daily road safety report">
+    <div className="mx-auto max-w-3xl space-y-6">
+      <PageHeader title="Reports" subtitle="Export the daily road safety report as a PDF: KPIs, risk, hourly traffic, zone ranking and key evidence." />
+      <Panel title="Daily road safety report" icon={FileText}>
         <div className="flex flex-wrap items-end gap-3">
           <label className="text-xs text-[var(--color-muted)]">
             Date

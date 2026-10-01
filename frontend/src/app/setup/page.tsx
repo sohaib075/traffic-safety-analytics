@@ -88,7 +88,7 @@ export default function SetupPage() {
               <PasswordInput value={confirm} onChange={setConfirm} autoComplete="new-password" />
             </Field>
             {error && (
-              <div role="alert" className="flex items-start gap-2 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+              <div role="alert" className="flex items-start gap-2 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
                 <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" /> {error}
               </div>
             )}

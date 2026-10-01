@@ -46,7 +46,7 @@ export function PasswordChecklist({ password, username }: { password: string; us
       </div>
       <ul className="space-y-1">
         {passwordChecks(password, username).map((c) => (
-          <li key={c.label} className={`flex items-center gap-1.5 ${c.ok ? "text-emerald-400" : "text-[var(--color-muted)]"}`}>
+          <li key={c.label} className={`flex items-center gap-1.5 ${c.ok ? "text-emerald-600" : "text-[var(--color-muted)]"}`}>
             {c.ok ? <Check className="h-3.5 w-3.5" /> : <Circle className="h-3 w-3" />} {c.label}
           </li>
         ))}
@@ -63,7 +63,7 @@ export function Field({ label, hint, error, children }: { label: string; hint?: 
     <label className="block">
       <span className="mb-1 block text-xs font-medium text-[var(--color-muted)]">{label}</span>
       {children}
-      {error ? <span className="mt-1 block text-xs text-red-400">{error}</span> : hint ? <span className="mt-1 block text-xs text-[var(--color-faint)]">{hint}</span> : null}
+      {error ? <span className="mt-1 block text-xs text-red-600">{error}</span> : hint ? <span className="mt-1 block text-xs text-[var(--color-faint)]">{hint}</span> : null}
     </label>
   );
 }
@@ -93,7 +93,7 @@ export function PasswordInput({ value, onChange, autoComplete = "current-passwor
       <button
         type="button"
         onClick={() => setShow((s) => !s)}
-        className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-1 text-[var(--color-faint)] hover:text-white"
+        className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-1 text-[var(--color-faint)] hover:text-[var(--color-ink)]"
         aria-label={show ? "Hide password" : "Show password"}
         tabIndex={-1}
       >
@@ -123,7 +123,7 @@ export function Modal({ open, onClose, title, children, footer, width = "max-w-m
   }, [open, onClose]);
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="fixed inset-0 z-50 grid place-items-center bg-slate-900/40 p-4" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div
         ref={ref}
         role="dialog"
@@ -133,7 +133,7 @@ export function Modal({ open, onClose, title, children, footer, width = "max-w-m
       >
         <div className="flex shrink-0 items-center border-b border-[var(--color-line)] px-5 py-3">
           <h2 id={titleId} className="font-semibold">{title}</h2>
-          <button className="ml-auto rounded p-1 text-[var(--color-muted)] hover:text-white" onClick={onClose} aria-label="Close">
+          <button className="ml-auto rounded p-1 text-[var(--color-muted)] hover:text-[var(--color-ink)]" onClick={onClose} aria-label="Close">
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -162,7 +162,7 @@ export function ConfirmDialog({ open, title, message, confirmLabel, danger, busy
       footer={
         <>
           <button className="btn" onClick={onClose}>Cancel</button>
-          <button className={`btn ${danger ? "border-red-600 bg-red-600 text-white hover:bg-red-700" : "btn-primary"}`} onClick={onConfirm} disabled={busy}>
+          <button className={`btn ${danger ? "btn-danger" : "btn-primary"}`} onClick={onConfirm} disabled={busy}>
             {busy ? "Working…" : confirmLabel}
           </button>
         </>
@@ -189,7 +189,7 @@ export function SecretBox({ value }: { value: string }) {
     <div className="flex items-center gap-2 rounded-md border border-[var(--color-line)] bg-[var(--color-bg)] px-3 py-2">
       <code className="flex-1 select-all font-mono text-sm">{value}</code>
       <button type="button" className="btn py-1 text-xs" onClick={copy}>
-        {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />} {copied ? "Copied" : "Copy"}
+        {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />} {copied ? "Copied" : "Copy"}
       </button>
     </div>
   );
@@ -215,8 +215,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       {children}
       <div className="pointer-events-none fixed bottom-4 right-4 z-[60] flex flex-col gap-2" aria-live="polite">
         {toasts.map((t) => (
-          <div key={t.id} className={`panel pointer-events-auto flex items-center gap-2 px-4 py-2.5 text-sm shadow-xl ${t.kind === "error" ? "border-red-500/40" : "border-emerald-500/40"}`}>
-            {t.kind === "error" ? <X className="h-4 w-4 text-red-400" /> : <Check className="h-4 w-4 text-emerald-400" />}
+          <div key={t.id} className={`panel pointer-events-auto flex items-center gap-2 px-4 py-2.5 text-sm shadow-xl ${t.kind === "error" ? "border-red-200" : "border-emerald-200"}`}>
+            {t.kind === "error" ? <X className="h-4 w-4 text-red-600" /> : <Check className="h-4 w-4 text-emerald-600" />}
             {t.text}
           </div>
         ))}

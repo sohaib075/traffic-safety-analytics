@@ -160,7 +160,7 @@ function UploadView({ onStarted }: { onStarted: (jobId: number) => void }) {
         tabIndex={0}
         onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && inputRef.current?.click()}
         className={`panel cursor-pointer border-2 border-dashed p-6 transition-colors ${
-          dragging ? "border-[var(--color-accent)] bg-[var(--color-accent)]/5" : "hover:border-[#33445c]"
+          dragging ? "border-[var(--color-accent)] bg-[var(--color-accent)]/5" : "hover:border-slate-400"
         }`}
       >
         <input ref={inputRef} type="file" accept={ACCEPT} className="hidden" onChange={(e) => pick(e.target.files?.[0])} />
@@ -202,7 +202,7 @@ function UploadView({ onStarted }: { onStarted: (jobId: number) => void }) {
               key={q}
               type="button"
               onClick={() => setQuality(q)}
-              className={`panel p-4 text-left transition-colors ${quality === q ? "border-[var(--color-accent)] bg-[var(--color-accent)]/10" : "hover:border-[#33445c]"}`}
+              className={`panel p-4 text-left transition-colors ${quality === q ? "border-[var(--color-accent)] bg-[var(--color-accent-soft)]" : "hover:border-slate-400"}`}
               aria-pressed={quality === q}
             >
               <div className="flex items-center gap-2 font-medium">
@@ -218,7 +218,7 @@ function UploadView({ onStarted }: { onStarted: (jobId: number) => void }) {
         <input type="checkbox" className="mt-1" checked={conflicts} onChange={(e) => setConflicts(e.target.checked)} />
         <span>
           <span className="font-medium">Also detect potential near-misses &amp; pedestrian conflicts</span>
-          <span className="ml-2 rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase text-amber-300">Experimental</span>
+          <span className="ml-2 rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase text-amber-700">Experimental</span>
           <span className="mt-1 block text-xs text-[var(--color-muted)]">
             Without a calibrated camera, distances are guessed from the picture, so busy or side-on footage produces many
             false alarms. Best for overhead or elevated views; for reliable results calibrate a dedicated camera in Admin.
@@ -246,7 +246,7 @@ function UploadView({ onStarted }: { onStarted: (jobId: number) => void }) {
         </div>
       )}
       {error && (
-        <div role="alert" className="flex items-start gap-2 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+        <div role="alert" className="flex items-start gap-2 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
           <XCircle className="mt-0.5 h-4 w-4 shrink-0" /> {error}
         </div>
       )}
@@ -390,7 +390,7 @@ function JobView({ jobId, onNew }: { jobId: number; onNew: () => void }) {
                   <div className="flex flex-wrap gap-2 text-xs">
                     {Object.entries(lp.live.objects).map(([k, v]) => (
                       <span key={k} className="rounded-full bg-[var(--color-panel-2)] px-2.5 py-1">
-                        <span style={{ color: CLASS_COLOR[k] ?? "#8b98ab" }}>●</span> {k} {v}
+                        <span style={{ color: CLASS_COLOR[k] ?? "#64748b" }}>●</span> {k} {v}
                       </span>
                     ))}
                   </div>
@@ -401,7 +401,7 @@ function JobView({ jobId, onNew }: { jobId: number; onNew: () => void }) {
           </Panel>
         </div>
       ) : job.status === "failed" ? (
-        <div className="flex items-start gap-2 rounded-md border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300">
+        <div className="flex items-start gap-2 rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
           <XCircle className="mt-0.5 h-4 w-4 shrink-0" /> Analysis failed: {job.error}
         </div>
       ) : (
@@ -430,7 +430,7 @@ function Results({ job }: { job: Job }) {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-2 text-sm text-emerald-300">
+      <div className="flex items-center gap-2 text-sm text-emerald-700">
         <CheckCircle2 className="h-4 w-4" /> {job.status === "cancelled" ? "Stopped early — results cover the part that was processed." : "Analysis complete."}
         <span className="text-[var(--color-muted)]">
           {s?.video_seconds ? `${fmtDuration(s.video_seconds)} of video` : ""}
@@ -463,7 +463,7 @@ function Results({ job }: { job: Job }) {
                   return (
                     <div key={k} className="grid grid-cols-[90px_1fr_40px] items-center gap-2 text-sm">
                       <span className="capitalize text-[var(--color-muted)]">{k}</span>
-                      <div className="h-2 rounded-full bg-[var(--color-panel-2)]"><div className="h-2 rounded-full" style={{ width: `${(v / max) * 100}%`, background: CLASS_COLOR[k] ?? "#8b98ab" }} /></div>
+                      <div className="h-2 rounded-full bg-[var(--color-panel-2)]"><div className="h-2 rounded-full" style={{ width: `${(v / max) * 100}%`, background: CLASS_COLOR[k] ?? "#64748b" }} /></div>
                       <span className="num text-right">{v}</span>
                     </div>
                   );
@@ -480,7 +480,7 @@ function Results({ job }: { job: Job }) {
                   <span
                     key={k}
                     title={on ? "This check ran" : "Not run for this video"}
-                    className={`rounded-full px-2 py-0.5 text-[11px] ${on ? "bg-emerald-500/10 text-emerald-300" : "bg-[var(--color-panel-2)] text-[var(--color-faint)] line-through"}`}
+                    className={`rounded-full px-2 py-0.5 text-[11px] ${on ? "bg-emerald-50 text-emerald-700" : "bg-[var(--color-panel-2)] text-[var(--color-faint)] line-through"}`}
                   >
                     {EVENT_META[k]?.short ?? k}
                   </span>

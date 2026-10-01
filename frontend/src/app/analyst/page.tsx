@@ -77,7 +77,7 @@ export default function AnalystPage() {
         {msgs.map((m, i) => (
           <div key={i} className={`flex gap-3 ${m.role === "user" ? "justify-end" : ""}`}>
             {m.role === "assistant" && <Bot className="mt-1 h-5 w-5 shrink-0 text-[var(--color-accent)]" />}
-            <div className={`max-w-[85%] space-y-2 ${m.role === "user" ? "rounded-lg bg-[var(--color-accent)]/15 px-3 py-2" : ""}`}>
+            <div className={`max-w-[85%] space-y-2 ${m.role === "user" ? "rounded-lg bg-[var(--color-accent-soft)] px-3 py-2" : ""}`}>
               <p className="whitespace-pre-wrap text-sm leading-relaxed">{m.content}</p>
               {m.evidence && m.evidence.length > 0 && (
                 <div className="grid gap-2 sm:grid-cols-2">
